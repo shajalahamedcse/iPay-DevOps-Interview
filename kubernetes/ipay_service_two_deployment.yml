@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ipay-service-two
+spec:
+  selector:
+    matchLabels:
+      app: ipay-service-two
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: ipay-service-two
+    spec:
+      containers:
+      - name: ipay-service-two
+        image: shajalahamedcse/service_2:0.0.1
+        ports:
+        - containerPort: 5000

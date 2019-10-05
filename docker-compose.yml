@@ -1,0 +1,62 @@
+version: '3'
+services:
+ # Define the Flask web application
+ serviceone:
+
+   # Build the Dockerfile that is in the service_1 directory
+   build: ./service_1
+
+   # Always restart the container regardless of the exit status; try and restart the container indefinitely
+   restart: always
+
+   # Expose port 80 to other containers (not to the host of the machine)
+   ports:
+     - "5080:5000"
+
+  
+
+   # Don't create this container until the service_2 container (below) have been created
+   depends_on:
+     - servicetwo
+
+   # Pass environment variables to the flask container (this debug level lets you see more useful information)
+   environment:
+     FLASK_DEBUG: 1
+
+   # Deploy with three replicas in the case one of the containers fails (only in Docker Swarm)
+   deploy:
+     mode: replicated
+     replicas: 1
+
+ # Define the Flask web application
+ servicetwo:
+
+   # Build the Dockerfile that is in the service_1 directory
+   build: ./service_2
+
+   # Always restart the container regardless of the exit status; try and restart the container indefinitely
+   restart: always
+
+   # Expose port 6000 to other containers (not to the host of the machine)
+   ports:
+     - "6000:5000"
+
+  
+   # Pass environment variables to the flask container (this debug level lets you see more useful information)
+   environment:
+     FLASK_DEBUG: 1
+
+   # Deploy with three replicas in the case one of the containers fails (only in Docker Swarm)
+   deploy:
+     mode: replicated
+     replicas: 1
+
+
+
+
+
+
+
+
+
+ 
