@@ -128,12 +128,12 @@ pipeline {
 
       }
     }
-    stage('Staging Deployment') {
+    stage('Deployment') {
 
       steps {
         sh '''
-          kubectl create -f ./kubernetes/ipay_service_one_deployment.yml
-          kubectl create -f ./kubernetes/ipay_service_two_deployment.yml
+          kubectl apply -f ./kubernetes/ipay_service_one_deployment.yml
+          kubectl apply -f ./kubernetes/ipay_service_two_deployment.yml
         '''
       }
     }
